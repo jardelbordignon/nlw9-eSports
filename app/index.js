@@ -4,7 +4,7 @@
 
 import { AppRegistry } from 'react-native'
 
-import { name as esportsName } from './esports.json'
+import { name as appName } from './app.json'
 import { App } from './src/App'
 
-AppRegistry.registerComponent(esportsName, () => App)
+AppRegistry.registerComponent(appName, () => App)

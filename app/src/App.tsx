@@ -1,10 +1,20 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { StatusBar } from 'react-native'
+
+import { Background } from 'src/components'
+
+import { Home } from './screens/Home'
 
 export function App() {
   return (
-    <View>
-      <Text>App</Text>
-    </View>
+    <Background>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
+
+      <Home />
+    </Background>
   )
 }

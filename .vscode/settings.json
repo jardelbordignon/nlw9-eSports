@@ -1,0 +1,10 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.insertFinalNewline": true,
+    "source.formatDocument": true,
+    "source.fixAll.eslint": true,
+  }
+}

@@ -1,9 +1,11 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react'
 import { StatusBar } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { Background } from 'src/components'
 
-import { Home } from './screens/Home'
+import { Routes } from './routes'
 
 export function App() {
   return (
@@ -14,7 +16,9 @@ export function App() {
         translucent
       />
 
-      <Home />
+      <SafeAreaView style={{ flex: 1 }}>
+        <Routes />
+      </SafeAreaView>
     </Background>
   )
 }

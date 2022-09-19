@@ -1,5 +1,6 @@
 export * from './Background'
 export * from './DuoCard'
+export * from './DuoMatchModal'
 export * from './GameCard'
 export * from './Heading'
 export * from './Loading'

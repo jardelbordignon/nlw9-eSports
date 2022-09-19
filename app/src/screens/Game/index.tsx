@@ -3,7 +3,7 @@ import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import logoImg from 'src/assets/logo-nlw-esports.png'
-import { Background, DuoCard, Heading } from 'src/components'
+import { Background, DuoCard, DuoMatchModal, Heading } from 'src/components'
 import { THEME } from 'src/theme'
 import { DuoType } from 'src/types/games'
 import { GameNavProps } from 'src/types/navigation'
@@ -14,6 +14,7 @@ export function Game({ route, navigation }: GameNavProps) {
   const { id, bannerUrl, title } = route.params
 
   const [duos, setDuos] = useState<DuoType[]>([])
+  const [discordDuoSelected, setDiscordDuoSelected] = useState('')
 
   useEffect(() => {
     fetch(`http://192.168.0.107:3000/games/${id}/ads`)
@@ -21,11 +22,15 @@ export function Game({ route, navigation }: GameNavProps) {
       .then(data => setDuos(data))
   }, [id])
 
+  const getDiscordUser = async (adsId: string) => {
+    fetch(`http://192.168.0.107:3000/ads/${adsId}/discord`)
+      .then(res => res.json())
+      .then(data => setDiscordDuoSelected(data.discord))
+  }
+
   const listEmptyComponent = () => (
     <Text style={s.emptyContentText}>Não há anúncios publicados ainda</Text>
   )
-
-  const onConnect = () => {}
 
   return (
     <Background>
@@ -34,7 +39,7 @@ export function Game({ route, navigation }: GameNavProps) {
           <TouchableOpacity onPress={navigation.goBack}>
             <Icon
               name="chevron-left"
-              size={24}
+              size={32}
               color={THEME.COLORS.CAPTION_300}
             />
           </TouchableOpacity>
@@ -52,7 +57,7 @@ export function Game({ route, navigation }: GameNavProps) {
           data={duos}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            <DuoCard data={item} onConnect={onConnect} />
+            <DuoCard data={item} onConnect={() => getDiscordUser(item.id)} />
           )}
           ListEmptyComponent={listEmptyComponent}
           horizontal
@@ -61,6 +66,12 @@ export function Game({ route, navigation }: GameNavProps) {
           contentContainerStyle={duos.length ? s.contentList : s.emptyContent}
         />
       </View>
+
+      <DuoMatchModal
+        discord={discordDuoSelected}
+        visible={discordDuoSelected !== ''}
+        onClose={() => setDiscordDuoSelected('')}
+      />
     </Background>
   )
 }
